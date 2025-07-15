@@ -1,0 +1,23 @@
+{
+  "name": "postaway",
+  "version": "1.0.0",
+  "description": "API Development for Social networking platform.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server.js"
+  },
+  "author": "Arbaz",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.0",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^2.0.1",
+    "uuid": "^11.1.0",
+    "validator": "^13.15.15"
+  }
+}
