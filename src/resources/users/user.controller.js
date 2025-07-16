@@ -2,6 +2,7 @@ import UserModel from "./user.model.js";
 import validator from 'validator';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import CustomError from "../../utils/customError.js";
 dotenv.config();
 
 export default class UserController {
@@ -10,10 +11,7 @@ export default class UserController {
       const all_users = UserModel.getAllUsers();
 
       if(!all_users){
-        return res.status(404).json({
-          success : false,
-          message : "No users found"
-        });
+        throw new CustomError("Bad Request", 400);
       }
 
       return res.status(200).json({
@@ -22,11 +20,7 @@ export default class UserController {
       })
 
     } catch (error) {
-      console.log(error);
-      return res.status(500).json({
-        success:false,
-        message:'Internal Server Error'
-      });
+      throw new CustomError();
     }
   }
 
@@ -45,10 +39,7 @@ export default class UserController {
       }
 
       if(errorMsg.length > 0){
-        return res.status(404).json({
-          success:false,
-          message:errorMsg
-        })
+        throw new CustomError(errorMsg, 404); 
       }
 
       let user_obj = {
@@ -60,10 +51,7 @@ export default class UserController {
       let user_created = UserModel.userSignUp(user_obj);
 
       if(!user_created){
-        return res.status(400).json({
-          success:false,
-          message: 'Falied to add user, please try later'
-        });
+        throw new CustomError("Falied to add user, please try later", 404); 
       }
 
       user_obj.password = "******************";
@@ -74,34 +62,32 @@ export default class UserController {
       });
 
     } catch (error) {
-      console.log(error);
-      return res.status(500).json({
-        success:false,
-        message:'Internal Server Error'
-      });
+      throw new CustomError();
     }
   }
 
   userSignIn(req, res){
-    let {email, password} = req.body;
-    const user_login = UserModel.userLogin({email:email, password:password});
-    if(!user_login){
-      return res.status(404).json({
-        success:false,
-        message:"Login failed, please try again. Check email and password before retrying"
+    try {
+      let {email, password} = req.body;
+      const user_login = UserModel.userLogin({email:email, password:password});
+      if(!user_login){
+        throw new CustomError("Login failed, please try again. Check email and password", 404);
+      }
+      // payload creation
+      let payload = {  
+        name:user_login.name,
+        email:email
+      }  
+      const token = jwt.sign(payload, process.env.SECRET_KEY, {expiresIn:6000});
+      return res.status(200).json({
+        success:true,
+        message:"Login Successfull",
+        token:token
       });
+    } catch (error) {
+      throw new CustomError(); 
     }
-     // payload creation
-    let payload = {  
-      name:user_login.name,
-      email:email
-    }  
-    const token = jwt.sign(payload, process.env.SECRET_KEY, {expiresIn:6000});
-    return res.status(200).json({
-      success:true,
-      message:"Login Successfull",
-      token:token
-    });
+    
   }
 
 }

@@ -1,74 +1,72 @@
+import CustomError from "../../utils/customError.js";
+import Pagination from "../../utils/pagination.js";
 import PostModel from "./posts.model.js";
 
 export default class PostController {
   retriveAllPost(req, res){
     try {
+      const {page, limit} = req.query;     
+
       const posts = PostModel.getAllPosts();
       if(!posts){
-        return res.status(404).json({
-          success:false,
-          message:"No data found"
-        });
+        throw new CustomError("No post found", 400);
       }
+
+      const paginationObj = new Pagination();
+      const paginatedPost = paginationObj.doPagination(posts, page, limit);
 
       return res.status(200).json({
         success:true,
-        data:posts
+        data:paginatedPost
       });
     } catch (error) {
-      console.error(error);
-      return res.status(500).json({
-        success:false,
-        message:"Internal Server Error"
-      });
+      throw new CustomError();
     }
   }
+
   retrivePostByID(req, res){
     try {
       const {id} = req.params;
+      const {page, limit} = req.query;
       const post = PostModel.getPostByPostID(id);
       if(!post){
-        return res.status(404).json({
-          success:false,
-          message:"No data found"
-        });
+        throw new CustomError("No post found", 400);
       }
+
+      const paginationObj = new Pagination();
+      const paginatedPost = paginationObj.doPagination(post, page, limit);
 
       return res.status(200).json({
         success:true,
-        data:post
+        data:paginatedPost
       });
     } catch (error) {
-      console.error(error);
-      return res.status(500).json({
-        success:false,
-        message:"Internal Server Error"
-      });
+      throw new CustomError();
     }
   }
+
   retrivePostByUserLogin(req, res){
     try {
       const user_obj = req.user;
       console.log(user_obj);
+      const {page, limit} = req.query;
       const allUserPost = PostModel.getPostByUserLogin(user_obj);
       if(!allUserPost){
-        return res.status(404).json({
-          success:false,
-          message:"No Post found"
-        });
+        throw new CustomError("No post found", 400);
       }
+
+      const paginationObj = new Pagination();
+      const paginatedPost = paginationObj.doPagination(allUserPost, page, limit);
+
       return res.status(200).json({
         success:true,
-        data:allUserPost
+        data:paginatedPost
       });
     } catch (error) {
-      console.error(error);
-      return res.status(500).json({
-        success:false,
-        message:"Internal Server Error"
-      });
+      throw new CustomError();
     }
   }
+
   createPost(req, res){
     try {
       const {caption} = req.body;
@@ -76,46 +74,29 @@ export default class PostController {
       const userID = req.user.id;
 
       const post_created = PostModel.newPostCreation({userID:userID, caption:caption, imageURL:ImageURL});
-
       if(!post_created){
-        return res.status(404).json({
-          success:false,
-          message:"No Post found"
-        });
+        throw new CustomError("No post found", 400);
       }
       return res.status(200).json({
         success:true,
         data:post_created
       });
-      
     } catch (error) {
-      console.error(error);
-      return res.status(500).json({
-        success:false,
-        message:"Internal Server Error"
-      });
+      throw new CustomError();
     }
   }
+
   deletePost(req, res){
     try {
       const {id} = req.params;
       const check_post_exists = PostModel.getPostByPostID(id);
       
       if(!check_post_exists){
-        return res.status(404).json({
-          success:false,
-          message:`No post exists for post ID ${id}`
-        });
+        throw new CustomError(`PostID : ${id} does not exists`, 404);
       }
 
       const deleted_post = PostModel.deletePost(id); 
 
-      if(!deleted_post){
-        return res.status(404).json({
-          success:false,
-          message:`PostID : ${id} does not exists`
-        });
-      }
       return res.status(200).json({
         success:true,
         message:'post deleted',
@@ -123,13 +104,10 @@ export default class PostController {
       });
 
     } catch (error) {
-      console.error(error);
-      return res.status(500).json({
-        success:false,
-        message:"Internal Server Error"
-      });
+      throw new CustomError();
     }
   }
+
   updatePost(req, res){
     try {
       const {caption} = req.body;
@@ -140,10 +118,7 @@ export default class PostController {
       const post_updated = PostModel.updatePost({id:id, userID:userID, caption:caption, imageURL:ImageURL});
 
       if(!post_updated){
-        return res.status(404).json({
-          success:false,
-          message:"No Post found"
-        });
+        throw new CustomError("No post found", 404);
       }
       return res.status(200).json({
         success:true,
@@ -151,11 +126,7 @@ export default class PostController {
       });
 
     } catch (error) {
-      console.error(error);
-      return res.status(500).json({
-        success:false,
-        message:"Internal Server Error"
-      });
+      throw new CustomError();
     }
   }
 }

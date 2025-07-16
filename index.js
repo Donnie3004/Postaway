@@ -3,6 +3,10 @@ import userRouter from './src/resources/users/user.routes.js';
 import postRouter from './src/resources/posts/posts.routes.js';
 import likesRouter from './src/resources/likes/likes.routes.js';
 import commentsRouter from './src/resources/comments/comments.routes.js';
+import loggerMiddleware from './src/middlewares/logger.js';
+import errorHandler from './src/middlewares/errorHandler.js';
+import bookmarkRouter from './src/resources/bookmark/bookmark.routes.js';
+
 const app = express();
 const port = 3000;
 
@@ -11,9 +15,12 @@ app.use(express.urlencoded({extended:true}));
 app.use(express.json());
 
 app.use('/api/users', userRouter);
+app.use(loggerMiddleware);
 app.use('/api/posts', postRouter);
 app.use('/api/likes', likesRouter);
 app.use('/api/comments', commentsRouter);
+app.use('/api/bookmark', bookmarkRouter);
+app.use(errorHandler);
 
 
 app.listen(port, (err)=>{

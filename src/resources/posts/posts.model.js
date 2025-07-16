@@ -50,6 +50,15 @@ export default class PostModel {
 }
 
 var posts = [
-  new PostModel('97fb46c3-62e8-4248-9fd9-a99fa0ae644d', 'mm2c0cb7-8000-223a-b385-8581298ea7ff', "caption", "http://localhost:3000/images/c5d7d63a-d042-4160-a023-45576961e32a_chart paper.jpg"),
-  new PostModel('e737deaa-bab8-42c0-8ee1-57fce21bffbd', 'mm2c0cb7-8000-223a-b385-8581298ea7ff', "this is my new post", "http://localhost:3000/images/9dba5afb-0f69-41e6-b432-08123fa58ff0_arbaz.jpeg")
+  new PostModel('97fb46c3-62e8-4248-9fd9-a99fa0ae644d', 'mm2c0cb7-8000-223a-b385-8581298ea7ff', "Post1", "http://localhost:3000/images/c5d7d63a-d042-4160-a023-45576961e32a_chart paper.jpg"),
+  new PostModel('e737deaa-bab8-42c0-8ee1-57fce21bffbd', 'mm2c0cb7-8000-223a-b385-8581298ea7ff', "post2", "http://localhost:3000/images/9dba5afb-0f69-41e6-b432-08123fa58ff0_arbaz.jpeg"),
+  new PostModel('e737deaa-bab8-42c0-8ee1-57fce21bffbe', 'mm2c0cb7-8000-223a-b385-8581298ea7ff', "post3", "http://localhost:3000/images/9dba5afb-0f69-41e6-b432-08123fa58ff0_arbaz.jpeg"),
+  new PostModel('e737deaa-bab8-42c0-8ee1-57fce21bffbf', 'mm2c0cb7-8000-223a-b385-8581298ea7ff', "post4", "http://localhost:3000/images/9dba5afb-0f69-41e6-b432-08123fa58ff0_arbaz.jpeg"),
+  new PostModel('e737deaa-bab8-42c0-8ee1-57fce21bffbg', 'mm2c0cb7-8000-223a-b385-8581298ea7ff', "post5", "http://localhost:3000/images/9dba5afb-0f69-41e6-b432-08123fa58ff0_arbaz.jpeg"),
+  new PostModel('e737deaa-bab8-42c0-8ee1-57fce21bffbh', 'mm2c0cb7-8000-223a-b385-8581298ea7ff', "post6", "http://localhost:3000/images/9dba5afb-0f69-41e6-b432-08123fa58ff0_arbaz.jpeg"),
+  new PostModel('e737deaa-bab8-42c0-8ee1-57fce21bffbi', 'mm2c0cb7-8000-223a-b385-8581298ea7ff', "post7", "http://localhost:3000/images/9dba5afb-0f69-41e6-b432-08123fa58ff0_arbaz.jpeg"),
+  new PostModel('e737deaa-bab8-42c0-8ee1-57fce21bffbj', 'mm2c0cb7-8000-223a-b385-8581298ea7ff', "post8", "http://localhost:3000/images/9dba5afb-0f69-41e6-b432-08123fa58ff0_arbaz.jpeg"),
+  new PostModel('e737deaa-bab8-42c0-8ee1-57fce21bffbk', 'mm2c0cb7-8000-223a-b385-8581298ea7ff', "post9", "http://localhost:3000/images/9dba5afb-0f69-41e6-b432-08123fa58ff0_arbaz.jpeg"),
+  new PostModel('e737deaa-bab8-42c0-8ee1-57fce21bffbl', 'mm2c0cb7-8000-223a-b385-8581298ea7ff', "post10", "http://localhost:3000/images/9dba5afb-0f69-41e6-b432-08123fa58ff0_arbaz.jpeg"),
+  new PostModel('e737deaa-bab8-42c0-8ee1-57fce21bffbm', 'mm2c0cb7-8000-223a-b385-8581298ea7ff', "post11", "http://localhost:3000/images/9dba5afb-0f69-41e6-b432-08123fa58ff0_arbaz.jpeg"),
 ];

@@ -1,32 +1,33 @@
 import CustomError from "../../utils/customError.js";
-import LikesModel from "./likes.model.js";
+import BookmarkModel from "./bookmark.model.js";
 
-export default class LikeController {
-  getAllLikes(req, res){
+export default class BookmarkController {
+
+  getAllBookmarks(req, res){
     try {
-      const {postID} = req.params;
-      const all_likes= LikesModel.getAllLikesByPostID(postID);
-      if(!all_likes){
-        throw new CustomError(`No likes present for post ${postID}`, 400);
+      const userId = req.user.id;
+      const all_bookmark= BookmarkModel.getAllBookmark(userId);
+      if(!all_bookmark){
+        throw new CustomError(`No bookmark present for post`, 400);
       }
       return res.status(200).json({
         success:false,
-        data:all_likes
+        data:all_bookmark
       })
     } catch (error) {
       throw new CustomError();
     }
   }
 
-  toggleLikes(req, res){
+  toggleBookmark(req, res){
     try {
       const {postID} = req.params;
       const userId = req.user.id;
-      const toggle_Status = LikesModel.toggleLikeStatus(postID, userId);
-      if(toggle_Status === 'likeRemoved'){
+      const toggle_Status = BookmarkModel.toggleBookmark(postID, userId);
+      if(toggle_Status === 'bookmark removed'){
         return res.status(200).json({
           success:true,
-          message:'like removed'
+          message:toggle_Status
         });
       } 
       return res.status(200).json({
